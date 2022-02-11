@@ -1,0 +1,19 @@
+entry{
+    min-width:200px;
+    background:#0c0c0c;
+    margin-top: 10px;
+}
+window{
+    background:#0e0e0e;
+}
+button{
+    background: #0c0c0c;
+    border-radius: 25px;
+    outline: 0;
+}
+window>box{
+    padding:10px;
+}
+window>box>box{
+    padding:10px;
+}

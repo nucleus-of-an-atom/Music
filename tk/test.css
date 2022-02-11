@@ -1,0 +1,9 @@
+button{
+    border:0;
+    border-radius:100px;
+    min-height:40px;
+    min-width:80px;
+    margin:10px;
+    background:linear-gradient(to bottom right, rgb(0, 162, 255) 30%, rgb(0, 255, 157));
+    color:black;
+}
