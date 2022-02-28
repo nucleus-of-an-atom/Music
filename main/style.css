@@ -2,6 +2,7 @@ entry{
     min-width:200px;
     background:#0c0c0c;
     margin-top: 10px;
+    margin-bottom:10px;
 }
 window{
     background:#0e0e0e;

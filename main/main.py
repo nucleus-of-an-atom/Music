@@ -56,7 +56,9 @@ g=vars(intp)
 
 #gui
 Gui.__style__("style.css")
-HeaderBar("hb",[])
+HeaderBar("hb",[],
+    TBtn("dld",["label='⬇'"])
+)
 Box("hbhbox",pkg,["orientation=Vars.hori","spacing=10"],
     TBtn("home",["label='Home'"]),
     TBtn("all",["label='All Songs'"])
@@ -77,6 +79,23 @@ Scale("seek",[])
 g["vbox"].pack_end(g["search"],True,False,0)
 g["vbox"].pack_end(g["seek"],True,False,0)
 # func 2.0
+from youtubesearchpython import VideosSearch
+def dld_f(w):
+    videosSearch = VideosSearch(w.get_text(), limit = 1).result()["result"][0]["link"]
+    file=w.get_text().replace(" ","_")
+    os.system(f'cd ~/Music;youtube-dl -o "./{file}.mp3" -x --audio-format mp3 {videosSearch}')
+    os.system("mpc update")
+dld_w=SE("",[])
+dld_w.connect("activate",dld_f)
+def dwld(w):
+    global dld_w
+    if w.get_active()==True:
+        g["vbox"].pack_end(dld_w,True,False,0)
+        dld_w.show()
+    else:
+        dld_w.hide()
+        g["vbox"].remove(dld_w)
+        g["root"].resize(1,1)
 def search_actv(*args):
     w = args[0]
     x=search_song(w.get_text())
@@ -163,15 +182,19 @@ def loop_de_loop(w):
         os.system("mpc repeat on")
     else:
         os.system("mpc repeat off")
-def init_f():
-    if os.popen("mpc").read().split("\n")[1].split("[")[1].split("]")[0].replace("%","")=='playing':
-        g["play"].set_active(True)
-        g["play"].set_label("⏸")
-    else:
-        g["play"].set_active(False)
+def init_f():    
+    try:
+        if os.popen("mpc").read().split("\n")[1].split("[")[1].split("]")[0].replace("%","")=='playing':
+            g["play"].set_active(True)
+            g["play"].set_label("⏸")
+        else:
+            g["play"].set_active(False)
+    except:
+        pass
 GLib.timeout_add_seconds(1,upd_pos)
 init_f()
 g["repeat"].connect("toggled",loop_de_loop)
+g["dld"].connect("toggled",dwld)
 g["seek"].set_draw_value(False)
 g["seek"].set_adjustment(Vars.perCent)
 g["seek"].connect("value-changed", upd_seek)
