@@ -13,6 +13,7 @@ A simple Music app, made with a custom PyGTK interpreter
 # Dependencies
 - MPD
 - MPC
+- Youtube-DL (for downloads)
 - Plata Noir GTK Theme (optional, for the best ui)
 
 # Extra
